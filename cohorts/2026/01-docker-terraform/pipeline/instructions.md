@@ -164,3 +164,28 @@ docker run -it \
   --network=pg-network \
   --name pgadmin \
   dpage/pgadmin4
+
+
+
+
+Use docker compose
+
+
+# Stop and remove volumes
+docker-compose down -v
+
+docker-compose up -d
+
+docker network ls
+
+docker run -it \
+  --network=pipeline_default \
+  taxi_ingest:v001 \
+    --pg-user postgres \
+    --pg-pass postgres \
+    --pg-host db \
+    --pg-port 5432 \
+    --pg-db ny_taxi \
+    --taxi-type green \
+    --year 2025 \
+    --month 10
