@@ -9,44 +9,77 @@ import pyarrow.parquet as pq
 import os
 
 
+def ingest_zones(engine):
+    """Ingest taxi zone lookup table"""
+    zones_url = (
+        "https://github.com/DataTalksClub/nyc-tlc-data/"
+        "releases/download/misc/taxi_zone_lookup.csv"
+    )
+
+    print("Loading taxi_zone_lookup table...")
+
+    zones = pd.read_csv(zones_url)
+
+    zones.to_sql(
+        name="taxi_zone_lookup",
+        con=engine,
+        if_exists="replace",   # safe: small static dimension table
+        index=False
+    )
+
+    print("taxi_zone_lookup loaded successfully")
+
+
 @click.command()
 @click.option('--pg-user', default='root', help='PostgreSQL user')
 @click.option('--pg-pass', default='root', help='PostgreSQL password')
 @click.option('--pg-host', default='localhost', help='PostgreSQL host')
 @click.option('--pg-port', default=5432, type=int, help='PostgreSQL port')
 @click.option('--pg-db', default='ny_taxi', help='PostgreSQL database name')
-@click.option('--taxi-type', default='green', type=click.Choice(['green', 'yellow', 'fhv', 'fhvhv']), help='Taxi dataset type'
+@click.option(
+    '--taxi-type',
+    default='green',
+    type=click.Choice(['green', 'yellow', 'fhv', 'fhvhv']),
+    help='Taxi dataset type'
 )
 @click.option('--year', default=2025, type=int, help='Year of the data')
 @click.option('--month', default=11, type=int, help='Month of the data')
 @click.option('--target-table', default=None, help='Target table name')
-@click.option('--batch-size', default=100000, type=int, help='Batch size for Parquet loading')
-
-
-def run(pg_user, pg_pass, pg_host, pg_port, pg_db, taxi_type,year, month, target_table, batch_size):
+@click.option('--batch-size', default=100_000, type=int, help='Batch size for Parquet loading')
+def run(
+    pg_user,
+    pg_pass,
+    pg_host,
+    pg_port,
+    pg_db,
+    taxi_type,
+    year,
+    month,
+    target_table,
+    batch_size
+):
     """Ingest NYC taxi Parquet data into PostgreSQL database."""
 
     prefix = "https://d37ci6vzurychx.cloudfront.net/trip-data"
-
     url = f"{prefix}/{taxi_type}_tripdata_{year}-{month:02d}.parquet"
-
     local_file = f"{taxi_type}_tripdata_{year}-{month:02d}.parquet"
 
     if target_table is None:
         target_table = f"{taxi_type}_taxi_data_{year}_{month:02d}"
 
-
     engine = create_engine(
-        f'postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}'
+        f"postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}"
     )
+
+    ingest_zones(engine)
 
 
     if not os.path.exists(local_file):
         print(f"Downloading {url}")
         pd.read_parquet(url).to_parquet(local_file)
 
-    parquet_file = pq.ParquetFile(local_file)
 
+    parquet_file = pq.ParquetFile(local_file)
     first = True
 
     for batch in tqdm(
@@ -71,7 +104,7 @@ def run(pg_user, pg_pass, pg_host, pg_port, pg_db, taxi_type,year, month, target
             index=False
         )
 
-    print("Ingestion completed successfully")
+    print(f"Ingestion completed successfully → {target_table}")
 
 
 if __name__ == '__main__':

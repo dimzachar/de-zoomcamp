@@ -59,6 +59,8 @@ uv run python ingest_data.py \
 
 uv run pgcli -h localhost -p 5432 -u root -d ny_taxi
 
+Q2/ 
+db:5432
 
 Q3/ 
 SELECT COUNT(*) 
@@ -165,10 +167,12 @@ docker run -it \
   --name pgadmin \
   dpage/pgadmin4
 
-
+-------------------------------
 
 
 Use docker compose
+
+docker build -t taxi_ingest:v002 .
 
 
 # Stop and remove volumes
@@ -178,9 +182,9 @@ docker-compose up -d
 
 docker network ls
 
-docker run -it \
+docker run -it --rm \
   --network=pipeline_default \
-  taxi_ingest:v001 \
+  taxi_ingest:v002 \
     --pg-user postgres \
     --pg-pass postgres \
     --pg-host db \
@@ -188,4 +192,11 @@ docker run -it \
     --pg-db ny_taxi \
     --taxi-type green \
     --year 2025 \
-    --month 10
+    --month 11
+
+
+Run queries on pgadmin
+
+
+Q7/
+terraform init, terraform apply -auto-approve, terraform destroy
