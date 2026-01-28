@@ -32,6 +32,26 @@ Captured 1 output file(s).
 - 18,324,219
 - 29,430,127
 
+```sql
+SELECT COUNT(*) 
+FROM public.yellow_tripdata
+WHERE filename LIKE 'yellow_tripdata_2020%';
+```
+
+**Answer: `24,648,499`**
+
+```
+year	row_count
+2002	1
+2003	2
+2008	35
+2009	98
+2019	131
+2020	24648219
+2021	1925165
+```
+
+
 4) How many rows are there for the `Green` Taxi data for all CSV files in the year 2020?
 - 5,327,301
 - 936,199
@@ -66,7 +86,36 @@ WHERE filename LIKE 'yellow_tripdata_2021_03%';
 - Add a `timezone` property set to `UTC-5` in the `Schedule` trigger configuration
 - Add a `location` property set to `New_York` in the `Schedule` trigger configuration  
 
+
+https://kestra.io/docs/workflow-components/triggers/schedule-trigger
+```
+triggers:
+  - id: daily
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "@daily"
+    timezone: America/New_York
+```
+
 ## Submitting the solutions
 
 * Form for submitting: https://courses.datatalks.club/de-zoomcamp-2026/homework/hw2
 * Check the link above to see the due date
+
+
+---------
+
+
+Delete all from Bigquery
+
+```sql
+DECLARE table_name STRING;
+
+FOR table_row IN (
+  SELECT table_name
+  FROM `zoomcamp.INFORMATION_SCHEMA.TABLES`
+  WHERE table_name LIKE 'yellow_tripdata%'
+) DO
+  SET table_name = table_row.table_name;
+  EXECUTE IMMEDIATE FORMAT('DROP TABLE `zoomcamp.%s`', table_name);
+END FOR;
+```
