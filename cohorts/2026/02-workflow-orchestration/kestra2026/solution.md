@@ -40,17 +40,6 @@ WHERE filename LIKE 'yellow_tripdata_2020%';
 
 **Answer: `24,648,499`**
 
-```
-year	row_count
-2002	1
-2003	2
-2008	35
-2009	98
-2019	131
-2020	24648219
-2021	1925165
-```
-
 
 4) How many rows are there for the `Green` Taxi data for all CSV files in the year 2020?
 - 5,327,301
