@@ -75,6 +75,7 @@ WHERE filename LIKE 'yellow_tripdata_2021_03%';
 - Add a `timezone` property set to `UTC-5` in the `Schedule` trigger configuration
 - Add a `location` property set to `New_York` in the `Schedule` trigger configuration  
 
+**Answer: Add a `timezone` property set to `America/New_York` in the `Schedule` trigger configuration**
 
 https://kestra.io/docs/workflow-components/triggers/schedule-trigger
 ```
