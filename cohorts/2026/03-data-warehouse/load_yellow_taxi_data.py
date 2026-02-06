@@ -8,7 +8,7 @@ import time
 
 
 # Change this to your bucket name
-BUCKET_NAME = "dezoomcamp_hw3_2025"
+BUCKET_NAME = "zoom-test-demo-zachar"
 
 # If you authenticated through the GCP SDK you can comment out these two lines
 CREDENTIALS_FILE = "gcs.json"
@@ -76,7 +76,8 @@ def verify_gcs_upload(blob_name):
 
 
 def upload_to_gcs(file_path, max_retries=3):
-    blob_name = os.path.basename(file_path)
+    blob_name = os.path.basename(file_path).replace("yellow_tripdata", "yellow_taxi")
+    # blob_name = os.path.basename(file_path)
     blob = bucket.blob(blob_name)
     blob.chunk_size = CHUNK_SIZE
 
