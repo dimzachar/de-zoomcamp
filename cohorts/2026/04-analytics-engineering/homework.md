@@ -6,7 +6,9 @@ In this homework, we'll use the dbt project in `04-analytics-engineering/taxi_ri
 
 1. Set up your dbt project following the [setup guide](../../../04-analytics-engineering/setup/)
 2. Load the Green and Yellow taxi data for 2019-2020 into your warehouse
-3. Run `dbt build` to create all models and run tests
+3. Run `dbt build --target prod` to create all models and run tests
+
+> **Note:** By default, dbt uses the `dev` target. You must use `--target prod` to build the models in the production dataset, which is required for the homework queries below.
 
 After a successful build, you should have models like `fct_trips`, `dim_zones`, and `fct_monthly_zone_revenue` in your warehouse.
 
@@ -45,6 +47,7 @@ columns:
       - accepted_values:
           arguments:
             values: [1, 2, 3, 4, 5]
+            quote: false
 ```
 
 Your model `fct_trips` has been running successfully for months. A new value `6` now appears in the source data.
@@ -107,7 +110,7 @@ Create a staging model for the **For-Hire Vehicle (FHV)** trip data for 2019.
 What is the count of records in `stg_fhv_tripdata`?
 
 - 42,084,899
-- 43,244,696
+- 43,244,693
 - 22,998,722
 - 44,112,187
 
