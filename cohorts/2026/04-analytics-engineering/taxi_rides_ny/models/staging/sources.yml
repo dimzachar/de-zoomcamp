@@ -17,6 +17,24 @@ sources:
       warn_after: {count: 24, period: hour}
       error_after: {count: 48, period: hour}
     tables:
+      - name: fhv_tripdata
+        description: Raw FHV (for-hire vehicle) trip records
+        loaded_at_field: pickup_datetime
+        columns:
+          - name: dispatching_base_num
+            description: Dispatching base number identifying the fleet
+          - name: pickup_datetime
+            description: Date and time when trip started
+          - name: dropOff_datetime
+            description: Date and time when trip ended
+          - name: PUlocationID
+            description: Pickup TLC taxi zone ID
+          - name: DOlocationID
+            description: Dropoff TLC taxi zone ID
+          - name: SR_Flag
+            description: Shared ride flag (Y/N)
+          - name: Affiliated_base_number
+            description: Affiliated base number
       - name: green_tripdata
         description: Raw green taxi trip records
         loaded_at_field: lpep_pickup_datetime
