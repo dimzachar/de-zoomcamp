@@ -81,7 +81,7 @@ You want to ensure the `pickup_datetime` column in your trips table never has NU
 
 the not_null check ensures a column never has NULL values.
 
-**Answer: name: not_null**
+**Answer: `name: not_null`**
 
 ---
 
@@ -95,6 +95,7 @@ After building your pipeline, you want to visualize the dependency graph between
 - `bruin show`
 
 the lineage command is used to visualize the dependency graph between assets.
+
 **Answer: `bruin lineage`**
 
 ---
