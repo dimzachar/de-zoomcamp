@@ -9,4 +9,6 @@ dependencies = [
     "ibis-framework[duckdb]>=12.0.0",
     "jupyterlab>=4.5.4",
     "marimo>=0.19.9",
+    "plotly>=5.24.0",
+    "pandas>=2.2.0",
 ]
