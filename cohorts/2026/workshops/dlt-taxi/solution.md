@@ -2,7 +2,7 @@
 
 ## The Challenge
 
-See dlt_homework.md
+See the homework description here: [dlt_homework.md](dlt_homework.md)
 
 
 ### Run the pipeline
