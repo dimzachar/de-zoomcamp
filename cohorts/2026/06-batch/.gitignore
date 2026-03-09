@@ -1,0 +1,10 @@
+notes/*
+
+# Data files and directories
+notebooks/data/
+notebooks/fhvhv/
+notebooks/zones/
+*.csv.gz
+*.csv.gz.*
+*.csv.*
+*.parquet.*
