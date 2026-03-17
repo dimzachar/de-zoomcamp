@@ -27,3 +27,4 @@ logs/queries
 backup/
 *.duckdb
 cohorts/2026/05-data-platforms/*/
+cohorts/2026/07-streaming/notes/*
