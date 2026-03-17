@@ -26,3 +26,4 @@ __pycache__/
 logs/queries
 backup/
 *.duckdb
+cohorts/2026/05-data-platforms/*/
